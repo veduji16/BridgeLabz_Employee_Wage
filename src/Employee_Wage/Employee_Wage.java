@@ -8,20 +8,23 @@ public class Employee_Wage {
         final int PART_TIME = 2;
         final int WAGE_PER_HOUR = 20;
         final int FULL_DAY_HOURS = 8;
-        final int PART_TIME_HOURS = 4; // Assuming part-time hours are 4
+        final int PART_TIME_HOURS = 4;
 
-        double employeeType = Math.floor(Math.random() * 10) % 3;
+        int employeeType = (int) Math.floor(Math.random() * 10) % 3;
 
-        if (employeeType == FULL_TIME) {
-            int dailyWage = WAGE_PER_HOUR * FULL_DAY_HOURS;
-            System.out.println("Employee is full-time present.");
-            System.out.println("Daily wage: $" + dailyWage);
-        } else if (employeeType == PART_TIME) {
-            int dailyWage = WAGE_PER_HOUR * PART_TIME_HOURS;
-            System.out.println("Employee is part-time present.");
-            System.out.println("Daily wage: $" + dailyWage);
-        } else {
-            System.out.println("Employee is absent.");
+        switch (employeeType) {
+            case FULL_TIME:
+                int fullTimeWage = WAGE_PER_HOUR * FULL_DAY_HOURS;
+                System.out.println("Employee is full-time present.");
+                System.out.println("Daily wage: $" + fullTimeWage);
+                break;
+            case PART_TIME:
+                int partTimeWage = WAGE_PER_HOUR * PART_TIME_HOURS;
+                System.out.println("Employee is part-time present.");
+                System.out.println("Daily wage: $" + partTimeWage);
+                break;
+            default:
+                System.out.println("Employee is absent.");
         }
     }
 }
