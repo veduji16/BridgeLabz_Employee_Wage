@@ -1,7 +1,7 @@
 package Employee_Wage;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 class Company {
     private final String companyName;
@@ -33,40 +33,38 @@ class Company {
 }
 
 class CompanyManager {
-    private Map<String, Company> companies;
-    private Map<String, Integer> companyWages;
+    private List<Company> companies;
+    private List<Integer> companyWages;
 
     public CompanyManager() {
-        this.companies = new HashMap<>();
-        this.companyWages = new HashMap<>();
+        this.companies = new ArrayList<>();
+        this.companyWages = new ArrayList<>();
     }
 
     public void addCompany(Company company) {
-        companies.put(company.getCompanyName(), company);
+        companies.add(company);
     }
 
     public void calculateAndPrintWages() {
-        for (Map.Entry<String, Company> entry : companies.entrySet()) {
-            String companyName = entry.getKey();
-            Company company = entry.getValue();
+        for (Company company : companies) {
             int totalWage = 0;
             int workingDays = 20;
-            System.out.println(companyName);
+            System.out.println(company.getCompanyName());
             for (int day = 1; day <= workingDays; day++) {
                 int employeeType = (int) Math.floor(Math.random() * 10) % 3;
                 int dailyWage = company.calculateDailyWage(employeeType);
                 totalWage += dailyWage;
                 System.out.println("Day " + day + ": Daily wage: $" + dailyWage);
             }
-            companyWages.put(companyName, totalWage);
-            System.out.println("Total monthly wage for " + companyName + ": $" + totalWage);
+            companyWages.add(totalWage);
+            System.out.println("Total monthly wage for " + company.getCompanyName() + ": $" + totalWage);
             System.out.println();
         }
     }
 
     public void printTotalMonthlyWages() {
-        for (Map.Entry<String, Integer> entry : companyWages.entrySet()) {
-            System.out.println(entry.getKey() + " Total Monthly Wage: $" + entry.getValue());
+        for (int i = 0; i < companies.size(); i++) {
+            System.out.println(companies.get(i).getCompanyName() + " Total Monthly Wage: $" + companyWages.get(i));
         }
     }
 }
@@ -74,14 +72,10 @@ class CompanyManager {
 public class Employee_Wage {
     public static void main(String[] args) {
         System.out.println("...Welcome to Employee Wage Calculation Program...\n");
-
         CompanyManager companyManager = new CompanyManager();
-
         companyManager.addCompany(new Company("Company A", 20, 8, 4));
         companyManager.addCompany(new Company("Company B", 18, 7, 3));
-
         companyManager.calculateAndPrintWages();
-
         companyManager.printTotalMonthlyWages();
     }
 }
