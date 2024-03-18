@@ -1,17 +1,22 @@
 package Employee_Wage;
 
 public class Employee_Wage {
+    private final int FULL_TIME = 1;
+    private final int PART_TIME = 2;
+    private final int WAGE_PER_HOUR = 20;
+    private final int FULL_DAY_HOURS = 8;
+    private final int PART_TIME_HOURS = 4;
+    private final int WORKING_DAYS_PER_MONTH = 20;
+    private final int MAX_WORKING_HOURS = 100;
+
     public static void main(String[] args) {
         System.out.println("...Welcome to Employee Attendance Program...\n");
 
-        final int FULL_TIME = 1;
-        final int PART_TIME = 2;
-        final int WAGE_PER_HOUR = 20;
-        final int FULL_DAY_HOURS = 8;
-        final int PART_TIME_HOURS = 4;
-        final int WORKING_DAYS_PER_MONTH = 20;
-        final int MAX_WORKING_HOURS = 100;
+        Employee_Wage employee = new Employee_Wage();
+        employee.calculateMonthlyWage();
+    }
 
+    public void calculateMonthlyWage() {
         int totalWage = 0;
         int totalWorkingHours = 0;
         int workingDays = 0;
@@ -23,23 +28,18 @@ public class Employee_Wage {
                 case FULL_TIME:
                     totalWage += WAGE_PER_HOUR * FULL_DAY_HOURS;
                     totalWorkingHours += FULL_DAY_HOURS;
-                    System.out.println("Day " + (workingDays + 1) + ": Full-time present. Daily wage: $"
-                            + (WAGE_PER_HOUR * FULL_DAY_HOURS));
                     break;
                 case PART_TIME:
                     totalWage += WAGE_PER_HOUR * PART_TIME_HOURS;
                     totalWorkingHours += PART_TIME_HOURS;
-                    System.out.println("Day " + (workingDays + 1) + ": Part-time present. Daily wage: $"
-                            + (WAGE_PER_HOUR * PART_TIME_HOURS));
                     break;
                 default:
-                    System.out.println("Day " + (workingDays + 1) + ": Employee is absent.");
             }
 
             workingDays++;
         }
 
-        System.out.println("\nTotal monthly wage: $" + totalWage);
+        System.out.println("Total monthly wage: $" + totalWage);
         System.out.println("Total working hours: " + totalWorkingHours);
         System.out.println("Working days: " + workingDays);
     }
