@@ -1,7 +1,9 @@
 package Employee_Wage;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 class Company {
     private final String companyName;
@@ -33,11 +35,9 @@ class Company {
 }
 
 public class Employee_Wage {
-
     public static void calculateAndPrintWage(Company company, Map<String, Integer> companyWages) {
         int totalWage = 0;
         int workingDays = 20;
-
         System.out.println(company.getCompanyName());
         for (int day = 1; day <= workingDays; day++) {
             int employeeType = (int) Math.floor(Math.random() * 10) % 3;
@@ -45,7 +45,6 @@ public class Employee_Wage {
             totalWage += dailyWage;
             System.out.println("Day " + day + ": Daily wage: $" + dailyWage);
         }
-
         companyWages.put(company.getCompanyName(), totalWage);
         System.out.println("Total monthly wage: $" + totalWage);
     }
@@ -54,13 +53,15 @@ public class Employee_Wage {
         System.out.println("...Welcome to Employee Wage Calculation Program...\n");
 
         Map<String, Integer> companyWages = new HashMap<>();
+        List<Company> companies = new ArrayList<>();
 
-        Company companyA = new Company("Company A", 20, 8, 4);
-        Company companyB = new Company("Company B", 18, 7, 3);
+        companies.add(new Company("Company A", 20, 8, 4));
+        companies.add(new Company("Company B", 18, 7, 3));
 
-        calculateAndPrintWage(companyA, companyWages);
-        System.out.println();
-        calculateAndPrintWage(companyB, companyWages);
+        for (Company company : companies) {
+            calculateAndPrintWage(company, companyWages);
+            System.out.println();
+        }
 
         for (Map.Entry<String, Integer> entry : companyWages.entrySet()) {
             System.out.println(entry.getKey() + " Total Monthly Wage: $" + entry.getValue());
