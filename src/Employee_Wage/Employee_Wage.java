@@ -52,7 +52,6 @@ class CompanyManager {
         for (int i = 0; i < companies.size(); i++) {
             Company company = companies.get(i);
             List<Integer> dailyWageList = dailyWages.get(i);
-
             int totalWage = 0;
             int workingDays = 20;
             System.out.println(company.getCompanyName());
@@ -77,6 +76,21 @@ class CompanyManager {
             System.out.println();
         }
     }
+
+    public int getTotalMonthlyWageByCompany(String companyName) {
+        int index = -1;
+        for (int i = 0; i < companies.size(); i++) {
+            if (companies.get(i).getCompanyName().equals(companyName)) {
+                index = i;
+                break;
+            }
+        }
+        if (index != -1) {
+            return companyTotalWages.get(index);
+        } else {
+            return -1;
+        }
+    }
 }
 
 public class Employee_Wage {
@@ -87,5 +101,12 @@ public class Employee_Wage {
         companyManager.addCompany(new Company("Company B", 18, 7, 3));
         companyManager.calculateAndPrintWages();
         companyManager.printTotalMonthlyWages();
+
+        int totalWageCompanyA = companyManager.getTotalMonthlyWageByCompany("Company A");
+        if (totalWageCompanyA != -1) {
+            System.out.println("Total monthly wage for Company A: $" + totalWageCompanyA);
+        } else {
+            System.out.println("Company not found.");
+        }
     }
 }
