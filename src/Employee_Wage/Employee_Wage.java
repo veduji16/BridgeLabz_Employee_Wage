@@ -34,29 +34,36 @@ class Company {
 
 class CompanyManager {
     private List<Company> companies;
-    private List<Integer> companyWages;
+    private List<List<Integer>> dailyWages;
+    private List<Integer> companyTotalWages;
 
     public CompanyManager() {
         this.companies = new ArrayList<>();
-        this.companyWages = new ArrayList<>();
+        this.dailyWages = new ArrayList<>();
+        this.companyTotalWages = new ArrayList<>();
     }
 
     public void addCompany(Company company) {
         companies.add(company);
+        dailyWages.add(new ArrayList<>());
     }
 
     public void calculateAndPrintWages() {
-        for (Company company : companies) {
+        for (int i = 0; i < companies.size(); i++) {
+            Company company = companies.get(i);
+            List<Integer> dailyWageList = dailyWages.get(i);
+
             int totalWage = 0;
             int workingDays = 20;
             System.out.println(company.getCompanyName());
             for (int day = 1; day <= workingDays; day++) {
                 int employeeType = (int) Math.floor(Math.random() * 10) % 3;
                 int dailyWage = company.calculateDailyWage(employeeType);
+                dailyWageList.add(dailyWage);
                 totalWage += dailyWage;
                 System.out.println("Day " + day + ": Daily wage: $" + dailyWage);
             }
-            companyWages.add(totalWage);
+            companyTotalWages.add(totalWage);
             System.out.println("Total monthly wage for " + company.getCompanyName() + ": $" + totalWage);
             System.out.println();
         }
@@ -64,7 +71,10 @@ class CompanyManager {
 
     public void printTotalMonthlyWages() {
         for (int i = 0; i < companies.size(); i++) {
-            System.out.println(companies.get(i).getCompanyName() + " Total Monthly Wage: $" + companyWages.get(i));
+            System.out.println(companies.get(i).getCompanyName() + " Total Monthly Wage: $" + companyTotalWages.get(i));
+            List<Integer> dailyWageList = dailyWages.get(i);
+            System.out.println("Daily wages for " + companies.get(i).getCompanyName() + ": " + dailyWageList);
+            System.out.println();
         }
     }
 }
