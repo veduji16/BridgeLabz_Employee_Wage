@@ -1,46 +1,58 @@
 package Employee_Wage;
 
-public class Employee_Wage {
-    private final int FULL_TIME = 1;
-    private final int PART_TIME = 2;
-    private final int WAGE_PER_HOUR = 20;
-    private final int FULL_DAY_HOURS = 8;
-    private final int PART_TIME_HOURS = 4;
-    private final int WORKING_DAYS_PER_MONTH = 20;
-    private final int MAX_WORKING_HOURS = 100;
+class Company {
+    private final String companyName;
+    private final int wagePerHour;
+    private final int fullDayHours;
+    private final int partTimeHours;
 
-    public static void main(String[] args) {
-        System.out.println("...Welcome to Employee Attendance Program...\n");
-
-        Employee_Wage employee = new Employee_Wage();
-        employee.calculateMonthlyWage();
+    public Company(String companyName, int wagePerHour, int fullDayHours, int partTimeHours) {
+        this.companyName = companyName;
+        this.wagePerHour = wagePerHour;
+        this.fullDayHours = fullDayHours;
+        this.partTimeHours = partTimeHours;
     }
 
-    public void calculateMonthlyWage() {
-        int totalWage = 0;
-        int totalWorkingHours = 0;
-        int workingDays = 0;
+    public String getCompanyName() {
+        return companyName;
+    }
 
-        while (workingDays < WORKING_DAYS_PER_MONTH && totalWorkingHours < MAX_WORKING_HOURS) {
-            int employeeType = (int) Math.floor(Math.random() * 10) % 3;
-
-            switch (employeeType) {
-                case FULL_TIME:
-                    totalWage += WAGE_PER_HOUR * FULL_DAY_HOURS;
-                    totalWorkingHours += FULL_DAY_HOURS;
-                    break;
-                case PART_TIME:
-                    totalWage += WAGE_PER_HOUR * PART_TIME_HOURS;
-                    totalWorkingHours += PART_TIME_HOURS;
-                    break;
-                default:
-            }
-
-            workingDays++;
+    public int calculateDailyWage(int employeeType) {
+        switch (employeeType) {
+            case 1:
+                return wagePerHour * fullDayHours;
+            case 2:
+                return wagePerHour * partTimeHours;
+            default:
+                return 0;
         }
+    }
+}
 
+public class Employee_Wage {
+    public static void main(String[] args) {
+        System.out.println("...Welcome to Employee Wage Calculation Program...\n");
+
+        Company companyA = new Company("Company A", 20, 8, 4);
+        Company companyB = new Company("Company B", 18, 7, 3);
+
+        calculateAndPrintWage(companyA);
+        System.out.println();
+        calculateAndPrintWage(companyB);
+    }
+
+    public static void calculateAndPrintWage(Company company) {
+        int totalWage = 0;
+        int workingDays = 20;
+
+        System.out.println(company.getCompanyName());
+
+        for (int day = 1; day <= workingDays; day++) {
+            int employeeType = (int) Math.floor(Math.random() * 10) % 3;
+            int dailyWage = company.calculateDailyWage(employeeType);
+            totalWage += dailyWage;
+            System.out.println("Day " + day + ": Daily wage: $" + dailyWage);
+        }
         System.out.println("Total monthly wage: $" + totalWage);
-        System.out.println("Total working hours: " + totalWorkingHours);
-        System.out.println("Working days: " + workingDays);
     }
 }
