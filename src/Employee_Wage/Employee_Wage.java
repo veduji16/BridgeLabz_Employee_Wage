@@ -1,9 +1,7 @@
 package Employee_Wage;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
 
 class Company {
     private final String companyName;
@@ -34,37 +32,56 @@ class Company {
     }
 }
 
-public class Employee_Wage {
-    public static void calculateAndPrintWage(Company company, Map<String, Integer> companyWages) {
-        int totalWage = 0;
-        int workingDays = 20;
-        System.out.println(company.getCompanyName());
-        for (int day = 1; day <= workingDays; day++) {
-            int employeeType = (int) Math.floor(Math.random() * 10) % 3;
-            int dailyWage = company.calculateDailyWage(employeeType);
-            totalWage += dailyWage;
-            System.out.println("Day " + day + ": Daily wage: $" + dailyWage);
-        }
-        companyWages.put(company.getCompanyName(), totalWage);
-        System.out.println("Total monthly wage: $" + totalWage);
+class CompanyManager {
+    private Map<String, Company> companies;
+    private Map<String, Integer> companyWages;
+
+    public CompanyManager() {
+        this.companies = new HashMap<>();
+        this.companyWages = new HashMap<>();
     }
 
-    public static void main(String[] args) {
-        System.out.println("...Welcome to Employee Wage Calculation Program...\n");
+    public void addCompany(Company company) {
+        companies.put(company.getCompanyName(), company);
+    }
 
-        Map<String, Integer> companyWages = new HashMap<>();
-        List<Company> companies = new ArrayList<>();
-
-        companies.add(new Company("Company A", 20, 8, 4));
-        companies.add(new Company("Company B", 18, 7, 3));
-
-        for (Company company : companies) {
-            calculateAndPrintWage(company, companyWages);
+    public void calculateAndPrintWages() {
+        for (Map.Entry<String, Company> entry : companies.entrySet()) {
+            String companyName = entry.getKey();
+            Company company = entry.getValue();
+            int totalWage = 0;
+            int workingDays = 20;
+            System.out.println(companyName);
+            for (int day = 1; day <= workingDays; day++) {
+                int employeeType = (int) Math.floor(Math.random() * 10) % 3;
+                int dailyWage = company.calculateDailyWage(employeeType);
+                totalWage += dailyWage;
+                System.out.println("Day " + day + ": Daily wage: $" + dailyWage);
+            }
+            companyWages.put(companyName, totalWage);
+            System.out.println("Total monthly wage for " + companyName + ": $" + totalWage);
             System.out.println();
         }
+    }
 
+    public void printTotalMonthlyWages() {
         for (Map.Entry<String, Integer> entry : companyWages.entrySet()) {
             System.out.println(entry.getKey() + " Total Monthly Wage: $" + entry.getValue());
         }
+    }
+}
+
+public class Employee_Wage {
+    public static void main(String[] args) {
+        System.out.println("...Welcome to Employee Wage Calculation Program...\n");
+
+        CompanyManager companyManager = new CompanyManager();
+
+        companyManager.addCompany(new Company("Company A", 20, 8, 4));
+        companyManager.addCompany(new Company("Company B", 18, 7, 3));
+
+        companyManager.calculateAndPrintWages();
+
+        companyManager.printTotalMonthlyWages();
     }
 }
